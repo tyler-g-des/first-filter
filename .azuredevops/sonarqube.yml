@@ -1,0 +1,33 @@
+     
+ parameters: 
+  - nameKey: nameKey
+    type: string
+    default: ""
+
+  - nameProject: nameProject
+    type: string
+    default: ""  
+
+ steps:
+   - task: SonarQubePrepare@5
+     inputs:
+       SonarQube: 'sonarqube-local'
+       scannerMode: 'CLI'
+       cliProjectKey: ${{ parameters.nameKey }}
+       cliProjectName: ${{ parameters.nameProject }}
+       cliSources: '.'
+       extraProperties: |
+         # Additional properties that will be passed to the scanner, 
+         # Put one key=value per line, example:
+         # sonar.exclusions=**/*.bin
+         sonar.java.binaries=.
+         sonar.sources=./backend/src/main/java
+     displayName: 'Prepare SonarQube Analysi'   
+             
+   - task: SonarQubeAnalyze@5
+     displayName: 'Run SonarQube Analysis'
+
+   - task: SonarQubePublish@5
+     inputs:
+       pollingTimeoutSec: '300'
+     displayName: 'Publish SonarQube Analysis Result'

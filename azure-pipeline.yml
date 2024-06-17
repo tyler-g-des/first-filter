@@ -10,34 +10,15 @@ stages:
   displayName: 'Build the applicacion' 
   jobs:
 
-
    - job: SonarQubeAnalyze
      pool:
-       name: maquina-fisca
+       name: maquina-fisca 
      steps:
-       - task: SonarQubePrepare@5
-         inputs:
-           SonarQube: 'sonarqube-local'
-           scannerMode: 'CLI'
-           cliProjectKey: 'spring'
-           cliProjectName: 'springJava'
-           cliSources: '.'
-           extraProperties: |
-             # Additional properties that will be passed to the scanner, 
-             # Put one key=value per line, example:
-             # sonar.exclusions=**/*.bin
-             sonar.java.binaries=.
-             sonar.sources=./backend/src/main/java
-         displayName: 'Prepare SonarQube Analysi'   
-             
-       - task: SonarQubeAnalyze@5
-         displayName: 'Run SonarQube Analysis'
-
-       - task: SonarQubePublish@5
-         inputs:
-           pollingTimeoutSec: '300'
-         displayName: 'Publish SonarQube Analysis Result'
-
+       - template: .azuredevops/sonarqube.yml
+         parameters:
+           nameKey: spring
+           nameProject: springJava
+       
    - job: 'build'
      dependsOn: SonarQubeAnalyze
      condition: succeeded()
