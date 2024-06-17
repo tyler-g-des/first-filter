@@ -21,6 +21,7 @@ stages:
            scannerMode: 'CLI'
            cliProjectKey: 'spring'
            cliProjectName: 'springJava'
+           cliSources: '.'
            extraProperties: |
              # Additional properties that will be passed to the scanner, 
              # Put one key=value per line, example:
