@@ -1,0 +1,118 @@
+trigger:
+- main
+
+variables:
+  IMAGE_NAME: tyler0128/spring
+  TAG: '$(Build.BuildId)'
+
+stages:
+- stage: 'build'
+  displayName: 'Build the applicacion' 
+  jobs:
+
+
+   - job: SonarQubeAnalyze
+     pool:
+       name: maquina-fisca
+     steps:
+       - task: SonarQubePrepare@5
+         inputs:
+           SonarQube: 'sonarqube-local'
+           scannerMode: 'CLI'
+           cliProjectKey: 'spring'
+           cliProjectName: 'springJava'
+           cliSources: '.'
+           extraProperties: |
+             # Additional properties that will be passed to the scanner, 
+             # Put one key=value per line, example:
+             # sonar.exclusions=**/*.bin
+             sonar.java.binaries=.
+             sonar.sources=./backend/src/main/java
+         displayName: 'Prepare SonarQube Analysis'   
+             
+       - task: SonarQubeAnalyze@5
+         displayName: 'Run SonarQube Analysis'
+
+       - task: SonarQubePublish@5
+         inputs:
+           pollingTimeoutSec: '300'
+         displayName: 'Publish SonarQube Analysis Result'
+
+   - job: 'build'
+     dependsOn: SonarQubeAnalyze
+     condition: succeeded()
+     pool:
+       name: maquina-fisca
+
+     steps:  
+       - task: Maven@3
+         inputs:
+          mavenPomFile: 'backend/pom.xml'
+          mavenOptions: '-Xmx3072m'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '1.11'
+          jdkArchitectureOption: 'x54'
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          goals: 'package'         
+  
+   - job: 'Docker'
+     dependsOn: build
+     condition: succeeded()
+     pool:
+       name: maquina-fisca      
+       
+     steps:
+      - task: Docker@2
+        displayName: Build an image
+        inputs:
+          containerRegistry: 'DockerHub'
+          repository: '$(IMAGE_NAME)'
+          command: 'build'
+          Dockerfile: '**/Dockerfile'
+          tags: |
+            $(TAG)
+
+      - task: Docker@2
+        displayName: Push image to Docker Hub
+        inputs:
+          containerRegistry: 'DockerHub'
+          repository: '$(IMAGE_NAME)'
+          command: 'push'
+          tags: '$(TAG)'
+
+   - job: Job1
+     displayName: 'Job paralelo para imprimir "Hola Mundo"'
+     pool:
+       name: maquina-fisca
+    
+     steps:
+       - task: PowerShell@2
+         displayName: 'Imprimir "Hola Mundo"'
+         inputs:
+           targetType: 'inline'
+           script: |
+              1..10 | ForEach-Object {
+                Write-Host "Hola Mundo $_"
+              }
+
+   - job: Job2
+     displayName: 'Crear archivos con la fecha y mostrar en consola'
+     pool:
+       vmImage: 'windows-latest'
+
+     steps:
+      - powershell: |
+            $date = Get-Date -Format "yyyyMMdd"
+
+            1..10 | ForEach-Object {
+                $fileName = "archivo_$date_$_.txt"
+                New-Item -ItemType File -Name $fileName -Value "Contenido del archivo $_"
+            }
+
+            # Imprime los nombres de los archivos en la consola
+            Get-ChildItem -Name "archivo_$date*.txt" | ForEach-Object {
+                Write-Host $_
+            }
+        displayName: 'Crear archivos con la fecha y mostrar en consola'                
+        
