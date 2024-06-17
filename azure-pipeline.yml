@@ -28,7 +28,7 @@ stages:
              # sonar.exclusions=**/*.bin
              sonar.java.binaries=.
              sonar.sources=./backend/src/main/java
-         displayName: 'Prepare SonarQube Analysis'   
+         displayName: 'Prepare SonarQube Analysi'   
              
        - task: SonarQubeAnalyze@5
          displayName: 'Run SonarQube Analysis'
