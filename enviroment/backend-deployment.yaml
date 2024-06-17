@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: spring-aplication
+   labels:
+     app: spring-aplication
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-aplication
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: spring-aplication
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: example
+          image: tyler0128/spring:334
+          name: spring-aplication
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+              protocol: TCP
+          resources: {}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: spring-aplication
+  name: spring-aplication
+spec:
+  type: NodePort
+  ports:
+    - name: "8080"
+      port: 8080
+      nodePort: 30000
+      protocol: TCP
+  selector:
+    app: spring-aplication

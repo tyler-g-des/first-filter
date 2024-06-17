@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+     app: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: example
+            - name: POSTGRES_PASSWORD
+              value: db-wrz2z
+          image: postgres
+          name: db
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /run/secrets/db-password
+              name: db-password
+            - mountPath: /var/lib/postgresql/data
+              name: db-data
+      volumes:
+        - name: db-password
+          secret:
+            items:
+              - key: db-password
+                path: db-password
+            secretName: db-password
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: db-data
