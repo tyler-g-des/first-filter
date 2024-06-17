@@ -84,7 +84,7 @@ stages:
    - job: Job1
      displayName: 'Job paralelo para imprimir "Hola Mundo"'
      pool:
-       name: maquina-fisca
+       vmImage: 'windows-latest'
     
      steps:
        - task: PowerShell@2
