@@ -8,7 +8,7 @@
      default: ""
    - name: IMAGE_NAME
      type: string
-     default: tyler0128/'$(nameProject)'
+     default: tyler0128/'${{ parameters.nameProject }}'
    - name: TAG
      type: string
      default: '$(Build.BuildId)'
@@ -18,7 +18,7 @@
         displayName: Build an image
         inputs:
           containerRegistry: 'DockerHub'
-          repository: '${{ IMAGE_NAME }}'
+          repository: '${{ parameters.IMAGE_NAME }}'
           command: 'build'
           Dockerfile: '**/Dockerfile'
           tags: |
@@ -28,6 +28,6 @@
         displayName: Push image to Docker Hub
         inputs:
           containerRegistry: 'DockerHub'
-          repository: '${{ IMAGE_NAME }}'
+          repository: '${{ parameters.IMAGE_NAME }}'
           command: 'push'
           tags: '$(TAG)'
