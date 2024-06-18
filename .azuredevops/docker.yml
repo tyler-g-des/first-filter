@@ -18,7 +18,7 @@
         displayName: Build an image
         inputs:
           containerRegistry: 'DockerHub'
-          repository: tyler0128/'${{ parameters.IMAGE_NAME }}'
+          repository: tyler0128/'${{ parameters.nameProject }}'
           command: 'build'
           Dockerfile: '**/Dockerfile'
           tags: |
@@ -28,6 +28,6 @@
         displayName: Push image to Docker Hub
         inputs:
           containerRegistry: 'DockerHub'
-          repository: tyler0128/'${{ parameters.IMAGE_NAME }}'
+          repository: tyler0128/'${{ parameters.nameProject }}'
           command: 'push'
           tags: ${{ parameters.TAG }}
