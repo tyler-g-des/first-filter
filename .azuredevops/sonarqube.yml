@@ -1,12 +1,12 @@
      
  parameters: 
-  - nameKey: nameKey
-    type: string
-    default: ""
+   - nameKey: nameKey
+     type: string
+     default: ""
 
-  - nameProject: nameProject
-    type: string
-    default: ""  
+   - nameProject: nameProject
+     type: string
+     default: ""  
 
  steps:
    - task: SonarQubePrepare@5
