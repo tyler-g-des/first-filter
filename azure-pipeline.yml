@@ -16,8 +16,8 @@ stages:
      steps:
        - template: .azuredevops/sonarqube.yml
          parameters:
-           nameKey: 'spring'
-           nameProject: 'springJava'
+           nameKey: spring
+           nameProject: springJava
        
    - job: 'build'
      dependsOn: SonarQubeAnalyze
