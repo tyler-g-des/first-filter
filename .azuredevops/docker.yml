@@ -8,7 +8,7 @@
      default: ""
    - name: IMAGE_NAME
      type: string
-     default: tyler0128/'${{ nameProject }}'
+     default: tyler0128/'$(nameProject)'
    - name: TAG
      type: string
      default: '$(Build.BuildId)'
