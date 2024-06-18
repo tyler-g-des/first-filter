@@ -22,7 +22,7 @@
           command: 'build'
           Dockerfile: '**/Dockerfile'
           tags: |
-            $(TAG)
+            ${{ parameters.TAG }}
 
       - task: Docker@2
         displayName: Push image to Docker Hub
@@ -30,4 +30,4 @@
           containerRegistry: 'DockerHub'
           repository: '${{ parameters.IMAGE_NAME }}'
           command: 'push'
-          tags: '$(TAG)'
+          tags: ${{ parameters.TAG }}
