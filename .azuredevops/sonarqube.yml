@@ -1,10 +1,8 @@
-     
  parameters: 
-   - nameKey: nameKey
+   - name: nameKey
      type: string
      default: ""
-
-   - nameProject: nameProject
+   - name: nameProject
      type: string
      default: ""  
 
