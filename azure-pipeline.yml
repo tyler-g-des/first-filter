@@ -1,8 +1,6 @@
 trigger:
 - main
 
-
-
 stages:
 - stage: 'build'
   displayName: 'Build the applicacion' 
