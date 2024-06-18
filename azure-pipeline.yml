@@ -1,9 +1,7 @@
 trigger:
 - main
 
-variables:
-  IMAGE_NAME: tyler0128/spring
-  TAG: '$(Build.BuildId)'
+
 
 stages:
 - stage: 'build'
@@ -23,7 +21,7 @@ stages:
      dependsOn: SonarQubeAnalyze
      condition: succeeded()
      pool:
-       name: maquina-fisca
+       name: maquina-fisca  
 
      steps:  
        - task: Maven@3
@@ -41,26 +39,11 @@ stages:
      dependsOn: build
      condition: succeeded()
      pool:
-       name: maquina-fisca      
-       
+       name: maquina-fisca     
      steps:
-      - task: Docker@2
-        displayName: Build an image
-        inputs:
-          containerRegistry: 'DockerHub'
-          repository: '$(IMAGE_NAME)'
-          command: 'build'
-          Dockerfile: '**/Dockerfile'
-          tags: |
-            $(TAG)
-
-      - task: Docker@2
-        displayName: Push image to Docker Hub
-        inputs:
-          containerRegistry: 'DockerHub'
-          repository: '$(IMAGE_NAME)'
-          command: 'push'
-          tags: '$(TAG)'
+       - template: .azuredevops/docker.yml
+         parameters:
+           nameProject: spring
 
    - job: Job1
      displayName: 'Job paralelo para imprimir "Hola Mundo"'
