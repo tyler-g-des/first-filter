@@ -30,7 +30,11 @@ stages:
           jdkArchitectureOption: 'x54'
           publishJUnitResults: true
           testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          goals: 'package'         
+          goals: 'package' 
+
+       - task: PublishBuildArtifacts@1
+         displayName: 'Publish Artifact: released_package$(Build.BuildId)'
+         condition: succeeded()           
   
    - job: 'Docker'
      dependsOn: build
