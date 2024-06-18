@@ -20,7 +20,6 @@ stages:
      condition: succeeded()
      pool:
        name: maquina-fisca  
-
      steps:  
        - task: Maven@3
          inputs:
@@ -43,11 +42,10 @@ stages:
          parameters:
            nameProject: spring
 
-   - job: Job1
+   - job: ImprimirHolaMundo
      displayName: 'Job paralelo para imprimir "Hola Mundo"'
      pool:
        vmImage: 'windows-latest'
-    
      steps:
        - task: PowerShell@2
          displayName: 'Imprimir "Hola Mundo"'
@@ -58,11 +56,10 @@ stages:
                 Write-Host "Hola Mundo $_"
               }
 
-   - job: Job2
+   - job: ImprimirArchivo
      displayName: 'Crear archivos con la fecha y mostrar en consola'
      pool:
        vmImage: 'windows-latest'
-
      steps:
       - powershell: |
             $date = Get-Date -Format "yyyyMMdd"
