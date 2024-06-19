@@ -78,4 +78,38 @@ stages:
                 Write-Host $_
             }
         displayName: 'Crear archivos con la fecha y mostrar en consola'                
-        
+   
+   - job: IAC
+     displayName: 'Crear archivos con la fecha y mostrar en consola'
+     pool:
+       vmImage: 'windows-latest'
+     steps:
+
+       - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+         inputs:
+           terraformVersion: '1.8.5'
+           displayName: 'Install Terraform'
+
+       - task: AzureCLI@2
+         inputs:
+           azureSubscription: 'AzurePortal'
+           scriptType: 'bash'
+           scriptLocation: 'inlineScript'
+           inlineScript: |
+             az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
+             terraform init
+             terraform apply -auto-approve
+           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+
+       - script: |
+             echo "Writing kubeconfig to file"
+             echo "$(terraform output kube_config)" > ./kube_config.yaml
+         displayName: 'Get kubeconfig'
+ 
+       - task: Kubernetes@1
+         inputs:
+           connectionType: 'Kubeconfig'
+           kubeconfig: '$(System.DefaultWorkingDirectory)/terraform/kube_config.yaml'
+           command: 'apply'
+           useConfigurationFile: true
+           configuration: 'kubernetes.tf'
