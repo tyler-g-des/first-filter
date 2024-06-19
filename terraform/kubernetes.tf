@@ -8,7 +8,7 @@ resource "kubernetes_namespace" "java_app_namespace" {
 resource "kubernetes_deployment" "backend-spring" {
   metadata {
     name      = "backend-spring"
-    namespace = kubernetes_namespace.java_app_namespace.metadata.name["name"]
+    namespace = kubernetes_namespace.java_app_namespace.metadata["name"]
   }
   depends_on = [kubernetes_namespace.java_app_namespace]
 
