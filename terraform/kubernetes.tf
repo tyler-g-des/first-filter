@@ -1,3 +1,7 @@
+provider "kubernetes" {
+  config_context_cluster = "aks-cluster"
+}
+
 resource "kubernetes_namespace" "java_app_namespace" {
   metadata {
     name = "java-app-namespace"
