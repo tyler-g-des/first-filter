@@ -1,6 +1,9 @@
 trigger:
 - main
 
+variables:
+  - group: AZURE
+
 stages:
 - stage: 'build'
   displayName: 'Build the applicacion' 
@@ -101,7 +104,7 @@ stages:
            scriptType: 'bash'
            scriptLocation: 'inlineScript'
            inlineScript: |
-             az login 
+             az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
              terraform init
              terraform apply -auto-approve
            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
