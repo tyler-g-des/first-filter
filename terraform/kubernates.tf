@@ -1,13 +1,13 @@
-resource "kubernetes_namespace" "example" {
+resource "kubernetes_namespace" "default" {
   metadata {
-    name = "example-namespace"
+    name = "default-namespace"
   }
 }
 
 resource "kubernetes_deployment" "backend-spring" {
   metadata {
     name      = "backend-spring"
-    namespace = kubernetes_namespace.example.metadata[0].name
+    namespace = kubernetes_namespace.default.metadata[0].name
   }
 
   spec {
@@ -40,10 +40,10 @@ resource "kubernetes_deployment" "backend-spring" {
   }
 }
 
-resource "kubernetes_service" "example_app_service" {
+resource "kubernetes_service" "default_app_service" {
   metadata {
     name      = "backend-spring-service"
-    namespace = kubernetes_namespace.example.metadata[0].name
+    namespace = kubernetes_namespace.default.metadata[0].name
   }
 
   spec {

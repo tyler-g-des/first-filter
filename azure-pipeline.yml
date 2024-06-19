@@ -80,7 +80,7 @@ stages:
         displayName: 'Crear archivos con la fecha y mostrar en consola'                
    
    - job: IAC
-     displayName: 'Crear archivos con la fecha y mostrar en consola'
+     displayName: 'Desplegando infraestructura'
      pool:
        vmImage: 'windows-latest'
      steps:
