@@ -1,4 +1,5 @@
 resource "kubernetes_namespace" "java_app_namespace" {
+  depends_on = [azurerm_kubernetes_cluster.aks_cluster]
   metadata {
     name = "java-app-namespace"
   }
