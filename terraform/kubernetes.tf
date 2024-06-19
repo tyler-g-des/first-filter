@@ -1,6 +1,6 @@
 resource "kubernetes_namespace" "default" {
   metadata {
-    name = "default-namespace"
+    name = "default"
   }
 }
 
