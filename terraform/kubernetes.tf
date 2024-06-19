@@ -8,7 +8,7 @@ resource "kubernetes_namespace" "java_app_namespace" {
 resource "kubernetes_deployment" "backend-spring" {
   metadata {
     name      = "backend-spring"
-    namespace = kubernetes_namespace.java_app_namespace.metadata.name
+    namespace = "java-app-namespace"
   }
 
   spec {
@@ -44,7 +44,7 @@ resource "kubernetes_deployment" "backend-spring" {
 resource "kubernetes_service" "aplication_app_service" {
   metadata {
     name      = "backend-spring-service"
-    namespace = kubernetes_namespace.java_app_namespace.metadata.name
+    namespace = "java-app-namespace"
   }
 
   spec {
