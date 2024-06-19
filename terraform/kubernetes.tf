@@ -1,6 +1,6 @@
 resource "kubernetes_namespace" "aplication" {
   metadata {
-    name = "aplication-name"
+    name = "aplication_name"
   }
 }
 
