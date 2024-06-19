@@ -10,6 +10,7 @@ resource "kubernetes_deployment" "backend-spring" {
     name      = "backend-spring"
     namespace = kubernetes_namespace.java_app_namespace.metadata.name["name"]
   }
+  depends_on = [kubernetes_namespace.java_app_namespace]
 
   spec {
     replicas = 3
@@ -46,7 +47,7 @@ resource "kubernetes_service" "aplication_app_service" {
     name      = "backend-spring-service"
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
   }
-
+  depends_on = [kubernetes_namespace.java_app_namespace]
   spec {
     selector = {
       app = "backend-spring"
