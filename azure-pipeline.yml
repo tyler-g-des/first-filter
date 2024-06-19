@@ -90,11 +90,6 @@ stages:
            versionSpec: '3.x'
            addToPath: true
 
-       - script: |
-             python -m pip install --upgrade pip
-             pip install -r requirements.txt
-         displayName: 'Install dependencies'
-
        - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
          inputs:
            terraformVersion: '1.8.5'
