@@ -4,7 +4,7 @@ resource "kubernetes_namespace" "example" {
   }
 }
 
-resource "kubernetes_deployment" "example_app" {
+resource "kubernetes_deployment" "backend-spring" {
   metadata {
     name      = "backend-spring"
     namespace = kubernetes_namespace.example.metadata[0].name
