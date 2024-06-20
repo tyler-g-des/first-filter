@@ -31,11 +31,9 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   tags = {
     environment = "prod"
   }
-}
 
-resource "kubernetes_namespace" "java_app_namespace" {
-  metadata {
-    name = "java-app-namespace"
+  api_server_access_profile {
+    authorized_ip_ranges = ["192.168.1.1/32", "10.1.0.0/16"]
   }
-  depends_on = [azurerm_kubernetes_cluster.aks_cluster]
+  
 }
