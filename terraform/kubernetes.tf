@@ -5,7 +5,7 @@ resource "kubernetes_namespace" "java_app_namespace" {
   depends_on = [azurerm_kubernetes_cluster.aks_cluster]
 }
 
-resource "kubernetes_deployment" "backend-spring" {
+resource "kubernetes_deployment" "backend_spring" {
   metadata {
     name      = "backend-spring"
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
