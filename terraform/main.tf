@@ -32,3 +32,10 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     environment = "prod"
   }
 }
+
+resource "kubernetes_namespace" "java_app_namespace" {
+  metadata {
+    name = "java-app-namespace"
+  }
+  depends_on = [azurerm_kubernetes_cluster.aks_cluster]
+}
