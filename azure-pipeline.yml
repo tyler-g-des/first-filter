@@ -85,7 +85,7 @@ stages:
    - job: IAC
      displayName: 'Desplegando infraestructura'
      pool:
-       vmImage: 'windows-latest'
+       vmImage: 'ubuntu-latest'
      steps:
 
        - task: UsePythonVersion@0
