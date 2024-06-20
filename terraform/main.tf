@@ -33,7 +33,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   api_server_access_profile {
-    authorized_ip_ranges = ["192.168.1.1/32", "10.1.0.0/16","localhost"]
+    authorized_ip_ranges = ["192.168.1.1/32", "10.1.0.0/16"]
   }
   
 }
