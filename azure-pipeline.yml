@@ -95,7 +95,7 @@ stages:
 
        - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
          inputs:
-           terraformVersion: '1.8.5'
+           terraformVersion: '1.9.0'
            displayName: 'Install Terraform'
 
        - task: AzureCLI@2
@@ -105,7 +105,7 @@ stages:
            scriptLocation: 'inlineScript'
            inlineScript: |
              az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
-             terraform import azurerm_resource_group.aks_rg
+             terraform import azurerm_resource_group.aks_rg /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/aks-resource-group/Microsoft.Web/sites/instance1
              terraform init -upgrade
              terraform destroy -auto-approve
              terraform apply -auto-approve
