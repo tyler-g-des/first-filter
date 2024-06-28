@@ -66,21 +66,3 @@ resource "kubernetes_service" "application_app_service" {
     }
   }
 }
-resource "kubernetes_service" "application_app_service" {
-  metadata {
-    name      = "application-service"
-    namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
-  }
-
-  spec {
-    selector = {
-      app = "backend-spring"
-    }
-
-    port {
-      protocol    = "TCP"
-      port        = 80
-      target_port = 80
-    }
-  }
-}
