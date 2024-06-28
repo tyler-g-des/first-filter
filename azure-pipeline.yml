@@ -1,5 +1,5 @@
 trigger:
-- main
+- master
 
 variables:
   - group: AZURE
@@ -8,6 +8,7 @@ stages:
 - stage: 'build'
   displayName: 'Build the applicacion' 
   jobs:
+
   #  - job: SonarQubeAnalyze
   #    pool:
   #      name: maquina-fisca 
