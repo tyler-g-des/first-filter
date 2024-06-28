@@ -106,6 +106,7 @@ stages:
            inlineScript: |
              az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
              terraform init -upgrade
+             terraform plan -destroy
              terraform apply -auto-approve
            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
@@ -113,11 +114,3 @@ stages:
              echo "Writing kubeconfig to file"
              echo "$(terraform output kube_config)" > ./kube_config.yaml
          displayName: 'Get kubeconfig'
- 
-       - task: Kubernetes@1
-         inputs:
-           connectionType: 'Kubeconfig'
-           kubeconfig: '$(System.DefaultWorkingDirectory)/terraform/kube_config.yaml'
-           command: 'apply'
-           useConfigurationFile: true
-           configuration: 'kubernetes.tf'

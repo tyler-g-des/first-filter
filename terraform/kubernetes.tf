@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "backend_spring" {
       spec {
         container {
           name  = "backend-spring"
-          image = "nginx:1.14.2" # Reemplaza con la imagen de tu aplicación
+          image = "tyler0128/spring:391" # Reemplaza con la imagen de tu aplicación
           port {
             container_port = 80
           }

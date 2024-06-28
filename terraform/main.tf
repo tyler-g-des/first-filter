@@ -32,9 +32,5 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   tags = {
     environment = "prod"
   }
-
-  lifecycle {
-    prevent_destroy = true
-  }
   
 }
