@@ -9,78 +9,78 @@ stages:
   displayName: 'Build the applicacion' 
   jobs:
 
-   - job: SonarQubeAnalyze
-     pool:
-       name: maquina-fisca 
-     steps:
-       - template: .azuredevops/sonarqube.yml
-         parameters:
-           nameKey: spring
-           nameProject: springJava
+  #  - job: SonarQubeAnalyze
+  #    pool:
+  #      name: maquina-fisca 
+  #    steps:
+  #      - template: .azuredevops/sonarqube.yml
+  #        parameters:
+  #          nameKey: spring
+  #          nameProject: springJava
        
-   - job: 'build'
-     dependsOn: SonarQubeAnalyze
-     condition: succeeded()
-     pool:
-       name: maquina-fisca  
-     steps:  
-       - task: Maven@3
-         inputs:
-          mavenPomFile: 'backend/pom.xml'
-          mavenOptions: '-Xmx3072m'
-          javaHomeOption: 'JDKVersion'
-          jdkVersionOption: '1.11'
-          jdkArchitectureOption: 'x54'
-          publishJUnitResults: true
-          testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          goals: 'package' 
+  #  - job: 'build'
+  #    dependsOn: SonarQubeAnalyze
+  #    condition: succeeded()
+  #    pool:
+  #      name: maquina-fisca  
+  #    steps:  
+  #      - task: Maven@3
+  #        inputs:
+  #         mavenPomFile: 'backend/pom.xml'
+  #         mavenOptions: '-Xmx3072m'
+  #         javaHomeOption: 'JDKVersion'
+  #         jdkVersionOption: '1.11'
+  #         jdkArchitectureOption: 'x54'
+  #         publishJUnitResults: true
+  #         testResultsFiles: '**/surefire-reports/TEST-*.xml'
+  #         goals: 'package' 
 
-       - task: PublishBuildArtifacts@1
-         displayName: 'Publish Artifact: released_package$(Build.BuildId)'
-         condition: succeeded()           
+  #      - task: PublishBuildArtifacts@1
+  #        displayName: 'Publish Artifact: released_package$(Build.BuildId)'
+  #        condition: succeeded()           
   
-   - job: 'Docker'
-     dependsOn: build
-     condition: succeeded()
-     pool:
-       name: maquina-fisca     
-     steps:
-       - template: .azuredevops/docker.yml
-         parameters:
-           nameProject: spring
+  #  - job: 'Docker'
+  #    dependsOn: build
+  #    condition: succeeded()
+  #    pool:
+  #      name: maquina-fisca     
+  #    steps:
+  #      - template: .azuredevops/docker.yml
+  #        parameters:
+  #          nameProject: spring
 
-   - job: ImprimirHolaMundo
-     displayName: 'Job paralelo para imprimir "Hola Mundo"'
-     pool:
-       vmImage: 'windows-latest'
-     steps:
-       - task: PowerShell@2
-         displayName: 'Imprimir "Hola Mundo"'
-         inputs:
-           targetType: 'inline'
-           script: |
-              1..10 | ForEach-Object {
-                Write-Host "Hola Mundo $_"
-              }
+  #  - job: ImprimirHolaMundo
+  #    displayName: 'Job paralelo para imprimir "Hola Mundo"'
+  #    pool:
+  #      vmImage: 'windows-latest'
+  #    steps:
+  #      - task: PowerShell@2
+  #        displayName: 'Imprimir "Hola Mundo"'
+  #        inputs:
+  #          targetType: 'inline'
+  #          script: |
+  #             1..10 | ForEach-Object {
+  #               Write-Host "Hola Mundo $_"
+  #             }
 
-   - job: ImprimirArchivo
-     displayName: 'Crear archivos con la fecha y mostrar en consola'
-     pool:
-       vmImage: 'windows-latest'
-     steps:
-      - powershell: |
-            $date = Get-Date -Format "yyyyMMdd"
+  #  - job: ImprimirArchivo
+  #    displayName: 'Crear archivos con la fecha y mostrar en consola'
+  #    pool:
+  #      vmImage: 'windows-latest'
+  #    steps:
+  #     - powershell: |
+  #           $date = Get-Date -Format "yyyyMMdd"
 
-            1..10 | ForEach-Object {
-                $fileName = "archivo_$date_$_.txt"
-                New-Item -ItemType File -Name $fileName -Value "Contenido del archivo $_"
-            }
+  #           1..10 | ForEach-Object {
+  #               $fileName = "archivo_$date_$_.txt"
+  #               New-Item -ItemType File -Name $fileName -Value "Contenido del archivo $_"
+  #           }
 
-            # Imprime los nombres de los archivos en la consola
-            Get-ChildItem -Name "archivo_$date*.txt" | ForEach-Object {
-                Write-Host $_
-            }
-        displayName: 'Crear archivos con la fecha y mostrar en consola'                
+  #           # Imprime los nombres de los archivos en la consola
+  #           Get-ChildItem -Name "archivo_$date*.txt" | ForEach-Object {
+  #               Write-Host $_
+  #           }
+  #       displayName: 'Crear archivos con la fecha y mostrar en consola'                
    
    - job: IAC
      displayName: 'Desplegando infraestructura'
