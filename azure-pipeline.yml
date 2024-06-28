@@ -106,7 +106,8 @@ stages:
            inlineScript: |
              az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
              terraform init -upgrade
-             terraform destroy -auto-approve
+             terraform taint aks_rg
+             terraform taint aks_cluster
              terraform apply -auto-approve
            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
