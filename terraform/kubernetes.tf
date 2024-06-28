@@ -9,7 +9,7 @@ resource "kubernetes_namespace" "java_app_namespace" {
   metadata {
     name = "java-app-namespace"
   }
-  depends_on = [azurerm_kubernetes_cluster.aks_cluster]
+  # depends_on = [azurerm_kubernetes_cluster.aks_cluster]
 }
 
 resource "kubernetes_deployment" "backend_spring" {
@@ -17,7 +17,7 @@ resource "kubernetes_deployment" "backend_spring" {
     name      = "backend-spring"
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
   }
-  depends_on = [kubernetes_namespace.java_app_namespace]
+  # depends_on = [kubernetes_namespace.java_app_namespace]
 
   spec {
     replicas = 3
