@@ -40,7 +40,7 @@ resource "kubernetes_deployment" "backend_spring" {
           name  = "backend-spring"
           image = "tyler0128/spring:391" # Reemplaza con la imagen de tu aplicación
           port {
-            container_port = 80
+            container_port = 8080
           }
         }
       }
@@ -61,8 +61,11 @@ resource "kubernetes_service" "application_app_service" {
 
     port {
       protocol    = "TCP"
-      port        = 80
-      target_port = 80
+      port        = 8080
+      target_port = 8080
     }
+
+    # type="ClusterIP"
   }
 }
+
