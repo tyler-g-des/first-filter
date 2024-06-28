@@ -12,6 +12,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   location            = azurerm_resource_group.aks_rg.location
   resource_group_name = azurerm_resource_group.aks_rg.name
   dns_prefix          = "aksdns"
+  
 
   default_node_pool {
     name       = "default"
@@ -33,7 +34,11 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   api_server_access_profile {
-    authorized_ip_ranges = ["192.168.1.1/32", "10.1.0.0/16"]
+    authorized_ip_ranges = ["192.168.1.1/32", "10.1.0.0/16","186.33.93.54"]
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
   
 }
