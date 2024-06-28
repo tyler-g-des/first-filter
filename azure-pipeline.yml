@@ -106,7 +106,7 @@ stages:
            inlineScript: |
              az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
              terraform init -upgrade
-             terraform import azurerm_resource_group.aks_rg /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/aks-resource-group
+             terraform import azurerm_resource_group.aks_rg /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/aks-resource-group
              terraform destroy -auto-approve
              terraform apply -auto-approve
            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
