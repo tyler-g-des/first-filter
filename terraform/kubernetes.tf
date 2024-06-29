@@ -58,7 +58,7 @@ resource "kubernetes_deployment" "db_postgres" {
 
 resource "kubernetes_service" "db_app_service" {
   metadata {
-    name      = "db-service"
+    name      = "db-postgres"
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
   }
 
