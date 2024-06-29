@@ -9,8 +9,8 @@ resource "azurerm_resource_group" "aks-resource-group" {
 
 resource "azurerm_kubernetes_cluster" "aks-cluster" {
   name                = "aks-cluster"
-  location            = azurerm_resource_group.aks_rg.location
-  resource_group_name = azurerm_resource_group.aks_rg.name
+  location            = azurerm_resource_group.aks-resource-group.location
+  resource_group_name = azurerm_resource_group.aks-resource-group.name
   dns_prefix          = "aksdns"
   
 
