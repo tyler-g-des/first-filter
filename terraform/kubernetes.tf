@@ -1,15 +1,15 @@
 provider "kubernetes" {
-  host                   = azurerm_kubernetes_cluster.aks_cluster.kube_config.0.host
-  client_certificate     = base64decode(azurerm_kubernetes_cluster.aks_cluster.kube_config.0.client_certificate)
-  client_key             = base64decode(azurerm_kubernetes_cluster.aks_cluster.kube_config.0.client_key)
-  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks_cluster.kube_config.0.cluster_ca_certificate)
+  host                   = azurerm_kubernetes_cluster.aks-cluster.kube_config.0.host
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.aks-cluster.kube_config.0.client_certificate)
+  client_key             = base64decode(azurerm_kubernetes_cluster.aks-cluster.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks-cluster.kube_config.0.cluster_ca_certificate)
 }
 
 resource "kubernetes_namespace" "java_app_namespace" {
   metadata {
     name = "java-app-namespace"
   }
-  # depends_on = [azurerm_kubernetes_cluster.aks_cluster]
+  # depends_on = [azurerm_kubernetes_cluster.aks-cluster]
 }
 
 resource "kubernetes_deployment" "backend_spring" {
