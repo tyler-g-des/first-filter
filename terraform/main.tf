@@ -2,12 +2,12 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "aks_rg" {
+resource "azurerm_resource_group" "aks-resource-group" {
   name     = "aks-resource-group"
   location = "East US 2"
 }
 
-resource "azurerm_kubernetes_cluster" "aks_cluster" {
+resource "azurerm_kubernetes_cluster" "aks-cluster" {
   name                = "aks-cluster"
   location            = azurerm_resource_group.aks_rg.location
   resource_group_name = azurerm_resource_group.aks_rg.name
