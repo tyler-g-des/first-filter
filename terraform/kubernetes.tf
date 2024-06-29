@@ -106,6 +106,12 @@ resource "kubernetes_deployment" "backend_spring" {
         container {
           name  = "backend-spring"
           image = "tyler0128/spring:391" # Reemplaza con la imagen de tu aplicación
+
+          env {
+            name = "POSTGRES_DB"
+            value = "example"
+          }
+
           port {
             container_port = 8080
           }
