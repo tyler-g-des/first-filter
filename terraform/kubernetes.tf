@@ -12,6 +12,71 @@ resource "kubernetes_namespace" "java_app_namespace" {
   # depends_on = [azurerm_kubernetes_cluster.aks-cluster]
 }
 
+resource "kubernetes_deployment" "db_postgres" {
+  metadata {
+    name      = "db-postgres"
+    namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
+  }
+  # depends_on = [kubernetes_namespace.java_app_namespace]
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "db-postgres"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "db-postgres"
+        }
+      }
+
+      spec {
+        container {
+          name  = "db-postgres"
+          image = "postgres" # Reemplaza con la imagen de tu aplicación
+          env {
+            name = "POSTGRES_DB"
+            value = "example"
+          }
+          env {
+            name = "POSTGRES_PASSWORD"
+            value = "db-wrz2z"
+          }
+          port {
+            container_port = 5432
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "db_app_service" {
+  metadata {
+    name      = "db-service"
+    namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
+  }
+
+  spec {
+    selector = {
+      app = "db-postgres"
+    }
+
+    port {
+      protocol    = "TCP"
+      port        = 5432
+      target_port = 5432
+    }
+
+    # type="ClusterIP"
+  }
+}
+
 resource "kubernetes_deployment" "backend_spring" {
   metadata {
     name      = "backend-spring"
