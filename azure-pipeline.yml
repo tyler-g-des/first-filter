@@ -105,9 +105,9 @@ stages:
            scriptLocation: 'inlineScript'
            inlineScript: |
              az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
-             terraform import /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/aks-resource-group
-             terraform import azurerm_resource_group.aks-cluster /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/aks-cluster
              terraform init -upgrade
+             terraform import azurerm_resource_group.aks-resource-group /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/aks-resource-group
+             terraform import azurerm_resource_group.aks-cluster /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/aks-cluster
              terraform destroy -auto-approve
              terraform apply -auto-approve
            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
