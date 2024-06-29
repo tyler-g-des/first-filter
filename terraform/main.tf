@@ -2,14 +2,6 @@ provider "azurerm" {
   features {}
 }
 
-provider "registry.terraform.io/hashicorp/azurerm" {
-  version = "2.86.0"
-}
-
-provider "registry.terraform.io/hashicorp/kubernetes" {
-  version = "2.5.1"
-}
-
 resource "azurerm_resource_group" "aks-resource-group" {
   name     = "aks-resource-group"
   location = "East US 2"
