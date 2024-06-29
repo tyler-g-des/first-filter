@@ -106,7 +106,7 @@ stages:
            inlineScript: |
              az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
              terraform import aks-cluster java-app-namespace/backend-spring
-             terraform import azurerm_resource_group.aks-resource-group /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/aks-resource-group
+             terraform import azurerm_resource_group.aks-resource-group /subscriptions/7f3fb6f6-5828-477d-b2cc-d4a36b5d962a/resourceGroups/MC_aks-resource-group_aks-cluster_eastus2
              terraform init -upgrade
              terraform destroy -auto-approve
              terraform apply -auto-approve
