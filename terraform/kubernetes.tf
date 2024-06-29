@@ -62,6 +62,8 @@ resource "kubernetes_service" "db_app_service" {
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
   }
 
+  depends_on = [kubernetes_deployment.db_postgres] 
+
   spec {
     selector = {
       app = "db-postgres"
@@ -82,7 +84,7 @@ resource "kubernetes_deployment" "backend_spring" {
     name      = "backend-spring"
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
   }
-  # depends_on = [kubernetes_namespace.java_app_namespace]
+  depends_on = [kubernetes_deployment.db_postgres]
 
   spec {
     replicas = 3
@@ -118,6 +120,8 @@ resource "kubernetes_service" "application_app_service" {
     name      = "application-service"
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
   }
+
+  depends_on = [kubernetes_deployment.backend_spring]
 
   spec {
     selector = {
