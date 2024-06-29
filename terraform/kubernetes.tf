@@ -84,10 +84,10 @@ resource "kubernetes_deployment" "backend_spring" {
     name      = "backend-spring"
     namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
   }
-  depends_on = [kubernetes_deployment.db_postgres]
+  depends_on = [kubernetes_service.db_app_service]
 
   spec {
-    replicas = 3
+    replicas = 2
 
     selector {
       match_labels = {
