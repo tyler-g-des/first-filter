@@ -1,5 +1,10 @@
 provider "azurerm" {
+  version = "3.110.0"
   features {}
+}
+
+provider "kubernetes" {
+  version = "~> 2.31.0"  // Versión específica o rango compatible, ajusta según tus necesidades
 }
 
 resource "azurerm_resource_group" "aks-resource-group" {
