@@ -3,7 +3,7 @@ provider "kubernetes" {
   client_certificate     = base64decode(azurerm_kubernetes_cluster.aks-cluster.kube_config.0.client_certificate)
   client_key             = base64decode(azurerm_kubernetes_cluster.aks-cluster.kube_config.0.client_key)
   cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks-cluster.kube_config.0.cluster_ca_certificate)
-  config_context_cluster = azurerm_kubernetes_cluster.myaks.kube_config[0].context_cluster
+  config_context_cluster = azurerm_kubernetes_cluster.aks-cluster.kube_config[0].context_cluster
 }
 
 resource "kubernetes_namespace" "java_app_namespace" {
