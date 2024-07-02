@@ -49,6 +49,7 @@ resource "kubernetes_deployment" "db_postgres" {
           }
           port {
             container_port = 5432
+            protocol    = "TCP"
           }
         }
       }
