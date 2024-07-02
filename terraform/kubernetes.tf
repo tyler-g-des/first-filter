@@ -162,7 +162,7 @@ resource "kubernetes_ingress" "example-ingress" {
         path {
           path = "/"
           backend {
-            service_name = kubernetes_service.application_app_service.name  # Nombre del servicio al que se dirigirán las solicitudes
+            service_name = kubernetes_service.application_app_service.metadata[0].name  # Nombre del servicio al que se dirigirán las solicitudes
             service_port = 8080  # Puerto del servicio
           }
         }
