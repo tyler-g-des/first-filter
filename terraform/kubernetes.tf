@@ -145,3 +145,29 @@ resource "kubernetes_service" "application_app_service" {
   }
 }
 
+resource "kubernetes_ingress" "example-ingress" {
+  metadata {
+    name      = "example-ingress"
+    namespace = "java_app_namespace"  # Namespace donde se encuentra tu aplicación
+    annotations = {
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+    }
+  }
+
+  spec {
+    rule {
+      host = "ejemplo.com"  # Dominio o subdominio al que se dirigirán las solicitudes
+
+      http {
+        path {
+          path = "/"
+          backend {
+            service_name = kubernetes_service.application_app_service.name  # Nombre del servicio al que se dirigirán las solicitudes
+            service_port = 8080  # Puerto del servicio
+          }
+        }
+      }
+    }
+  }
+}
+
