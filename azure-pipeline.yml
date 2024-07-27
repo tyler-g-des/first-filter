@@ -82,7 +82,7 @@ stages:
   #           }
   #       displayName: 'Crear archivos con la fecha y mostrar en consola'                
    
-   - job: 'Copiar codigo terraform'
+   - job: Copiar codigo terraform
      displayName: 'Crear archivos con la fecha y mostrar en consola'
      pool:
        vmImage: 'windows-latest'
