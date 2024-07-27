@@ -148,7 +148,7 @@ resource "kubernetes_service" "application_app_service" {
 resource "kubernetes_ingress" "example-ingress" {
   metadata {
     name      = "example-ingress"
-    namespace = "java_app_namespace"  # Namespace donde se encuentra tu aplicación
+    namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
     annotations = {
       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
     }
@@ -163,11 +163,10 @@ resource "kubernetes_ingress" "example-ingress" {
           path = "/"
           backend {
             service_name = kubernetes_service.application_app_service.metadata[0].name  # Nombre del servicio al que se dirigirán las solicitudes
-            service_port = 8080  # Puerto del servicio
+            service_port = kubernetes_service.application_app_service.spec[0].port[0].port  # Puerto del servicio
           }
         }
       }
     }
   }
 }
-
