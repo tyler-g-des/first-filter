@@ -13,10 +13,10 @@ provider "azurerm" {
   features {}
 }
 
-# resource "azurerm_resource_group" "aks-resource-group" {
-#   name     = "aks-resource-group"
-#   location = "East US 2"
-# }
+resource "azurerm_resource_group" "aks-resource-group" {
+  name     = "aks-resource-group"
+  location = "East US 2"
+}
 
 # resource "azurerm_app_service_plan" "aks-resource-group" {
 #   name                = "__appserviceplan__"
