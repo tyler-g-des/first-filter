@@ -144,3 +144,38 @@ resource "kubernetes_service" "application_app_service" {
     # type="ClusterIP"
   }
 }
+
+## INGRESS 
+resource "kubernetes_ingress" "application_ingress" {
+  metadata {
+    name      = "application-ingress"
+    namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
+    annotations = {
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+    }
+  }
+
+  spec {
+    rules {
+      host = "default.ingress"  # Usa un nombre temporal si no tienes dominio
+
+      http {
+        paths {
+          path = "/"
+          path_type = "Prefix"
+
+          backend {
+            service {
+              name = kubernetes_service.application_app_service.metadata[0].name
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
