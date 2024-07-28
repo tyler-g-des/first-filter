@@ -144,29 +144,3 @@ resource "kubernetes_service" "application_app_service" {
     # type="ClusterIP"
   }
 }
-
-resource "kubernetes_ingress" "example-ingress" {
-  metadata {
-    name      = "example-ingress"
-    namespace = kubernetes_namespace.java_app_namespace.metadata[0].name
-    annotations = {
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
-    }
-  }
-
-  spec {
-    rule {
-      host = "ejemplo.com"  # Dominio o subdominio al que se dirigirán las solicitudes
-
-      http {
-        path {
-          path = "/"
-          backend {
-            service_name = kubernetes_service.application_app_service.metadata[0].name  # Nombre del servicio al que se dirigirán las solicitudes
-            service_port = kubernetes_service.application_app_service.spec[0].port[0].port  # Puerto del servicio
-          }
-        }
-      }
-    }
-  }
-}
