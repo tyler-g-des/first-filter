@@ -82,7 +82,7 @@ stages:
   #           }
   #       displayName: 'Crear archivos con la fecha y mostrar en consola'                
    
-   
+
    - job: CopiarCodigoTerraform
      displayName: 'Crear archivos con la fecha y mostrar en consola'
      pool:
@@ -94,6 +94,11 @@ stages:
            SourceFolder: terraform
            TargetFolder: '$(build.artifactstagingdirectory)/terraform'
 
+       - task: PublishBuildArtifacts@1
+         displayName: 'Publish Artifact'
+         inputs:
+           PathtoPublish: '$(build.artifactstagingdirectory)'
+           ArtifactName: 'drop'
   #  - job: IAC
   #    displayName: 'Desplegando infraestructura'
   #    pool:
