@@ -82,6 +82,7 @@ stages:
   #           }
   #       displayName: 'Crear archivos con la fecha y mostrar en consola'                
    
+   
    - job: CopiarCodigoTerraform
      displayName: 'Crear archivos con la fecha y mostrar en consola'
      pool:
