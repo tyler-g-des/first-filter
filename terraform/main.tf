@@ -39,22 +39,22 @@ resource "azurerm_resource_group" "aks-resource-group" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "app-service-vnet"
-  location            = azurerm_resource_group.aks_resource_group.location
-  resource_group_name = azurerm_resource_group.aks_resource_group.name
+  location            = azurerm_resource_group.aks-resource-group.location
+  resource_group_name = azurerm_resource_group.aks-resource-group.name
   address_space       = ["10.0.0.0/16"]
 }
 
 resource "azurerm_subnet" "subnet" {
   name                 = "app-service-subnet"
-  resource_group_name  = azurerm_resource_group.aks_resource_group.name
+  resource_group_name  = azurerm_resource_group.aks-resource-group.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "__appserviceplan__"
-  location            = azurerm_resource_group.aks_resource_group.location
-  resource_group_name = azurerm_resource_group.aks_resource_group.name
+  location            = azurerm_resource_group.aks-resource-group.location
+  resource_group_name = azurerm_resource_group.aks-resource-group.name
 
   sku {
     tier = "Free"
@@ -64,8 +64,8 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 
 resource "azurerm_app_service" "app_service" {
   name                = "__appservicename__"
-  location            = azurerm_resource_group.aks_resource_group.location
-  resource_group_name = azurerm_resource_group.aks_resource_group.name
+  location            = azurerm_resource_group.aks-resource-group.location
+  resource_group_name = azurerm_resource_group.aks-resource-group.name
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
 
   site_config {

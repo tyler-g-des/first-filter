@@ -156,26 +156,16 @@ resource "kubernetes_ingress" "application_ingress" {
   }
 
   spec {
-    rules {
-      host = "default.ingress"  # Usa un nombre temporal si no tienes dominio
-
+    rule {
       http {
-        paths {
+        path {
           path = "/"
-          path_type = "Prefix"
-
           backend {
-            service {
-              name = kubernetes_service.application_app_service.metadata[0].name
-              port {
-                number = 8080
-              }
-            }
+            service_name = kubernetes_service.application_app_service.metadata[0].name
+            service_port = 8080
           }
         }
       }
     }
   }
 }
-
-
