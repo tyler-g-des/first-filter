@@ -8,6 +8,7 @@
 	}
 }
 
+
 provider "azurerm" {
   features {}
 }
